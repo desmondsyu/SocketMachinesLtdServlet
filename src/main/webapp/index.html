@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Socket Price Quote</title>
+</head>
+<body>
+	<form action="quote" method="post">
+		<label>Type</label> 
+		<select name="type">
+			<option value="typeA" selected>Type A</option>
+			<option value="typeB">Type B</option>
+			<option value="typeC">Type C</option>
+		</select>
+		<br>
+		<label>Quantity</label>
+		<input type="number" name="quantity" min="1" required>
+		<br>
+		<label>Name</label>
+		<input type="text" name="name" required>
+		<br>
+		<label>Email</label>
+		<input type="email" name="email" required>
+		<br>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
