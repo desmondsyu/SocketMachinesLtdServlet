@@ -39,27 +39,13 @@ public class SocketServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 
-		// retrieve the form data
 		String type = request.getParameter("type");
 		String quantity = request.getParameter("quantity");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 
-		int qty = 0;
-		// validate numeric value
-		try {
-			qty = Integer.parseInt(quantity);
-			if (qty <= 0) {
-				throw new NumberFormatException("Quantity should be positive");
-			}
-		} catch (NumberFormatException nfe) {
-
-		}
-
-		// business logic to calculate price
+		int qty = quantityValidate(quantity);
 		double price = businessLogic(type, qty);
 
 		response.setContentType("text/html");
@@ -67,13 +53,14 @@ public class SocketServlet extends HttpServlet {
 
 		try {
 			String htmlResponse = "<html>";
-			htmlResponse += "<h1>Socket Machines Ltd</h2><br>";
-			htmlResponse += "<p>Contact:</p><br>";
-			htmlResponse += "<p>Name: " + name + "</p><br>";
+			htmlResponse += "<h1>Socket Machines Ltd</h1><br>";
+			htmlResponse += "<h3>Contact</h3>";
+			htmlResponse += "<p>Name: " + name + "</p>";
 			htmlResponse += "<p>Email: " + email + "</p><br>";
-			htmlResponse += "<p>Product: " + type + "</p><br>";
-			htmlResponse += "<p>Quantity: " + qty + "</p><br>";
-			htmlResponse += "<p>Total: $" + price + "</p><br>";
+			htmlResponse += "<h3>Quote</h3>";
+			htmlResponse += "<p>Product: " + type + "</p>";
+			htmlResponse += "<p>Quantity: " + qty + "</p>";
+			htmlResponse += "<p>Total: $" + price + "</p>";
 			htmlResponse += "</html>";
 
 			writer.println(htmlResponse);
@@ -81,6 +68,16 @@ public class SocketServlet extends HttpServlet {
 			writer.close();
 		}
 
+	}
+
+	private int quantityValidate(String quantity) throws NumberFormatException {
+		int qty = Integer.parseInt(quantity);
+
+		if (qty <= 0) {
+			throw new NumberFormatException("Quantity should be positive");
+		}
+
+		return qty;
 	}
 
 	private double businessLogic(String type, int quantity) {
